@@ -13,3 +13,4 @@ public class Item {
 		mana = Mp;
 	}
 }
+//daisy tomta
