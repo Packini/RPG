@@ -27,12 +27,13 @@ public class Player {
 		this.melofriego = legano;
 		this.mefriega = megana;
 	}
+	/* FUNCION A METER EN EL FUTURO
 	public double calcularatk(Player opponent, double attack)
 	{
 		opponent.vida -= (this.atk / opponent.def);
 		
 		return opponent.vida;
-	}
+	}*/
 	public void Atacar(Player opponent) {
 		if (calcularatk(opponent, opponent.atk)<= 0) {
 			opponent.vida = 0;
