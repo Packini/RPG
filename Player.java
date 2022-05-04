@@ -1,61 +1,70 @@
 package RPG;
-import RPG.Item;
-
 public class Player {
+	Inventario inv = new Inventario();
+
+	//STATS DEL PERSONAJE
 	String rol;
+	String nombre;
 	double vida;
 	double mana;
 	double atk;
 	double def;
 	double HpMax; 
 	double MpMax; 
-	
-	public Player (String clase, double Hp, double Mp, double ataque, double defensa) {
-		rol = clase;
-		vida = Hp;
-		mana = Mp;
-		atk = ataque;
-		def = defensa;	
-		HpMax = vida;
-		MpMax = mana;
+	int mefriega;
+	int melofriego;
+	boolean real;
+	public Player (String name, String clase, double Hp, double Mp, double ataque, double defensa, int legano, int megana, boolean jugador) {
+		this.real = jugador;
+		this.rol = clase;
+		this.vida = Hp;
+		this.mana = Mp;
+		this.atk = ataque;
+		this.def = defensa;	
+		this.HpMax = vida;
+		this.MpMax = mana;
+		this.nombre = name;
+		this.melofriego = legano;
+		this.mefriega = megana;
 	}
-	
+	public double calcularatk(Player opponent, double attack)
+	{
+		opponent.vida -= (this.atk / opponent.def);
+		
+		return opponent.vida;
+	}
 	public void Atacar(Player opponent) {
-		if (opponent.vida <= 0) {
-			System.out.println("Has Derrotado a " + opponent.rol);
+		if (calcularatk(opponent, opponent.atk)<= 0) {
+			opponent.vida = 0;
+			System.out.println("Has Derrotado a " + opponent.nombre);
 			return;
 		} else {
-			if (this.mana > 0) {
+			if (this.mana >= 20) {
 				this.mana = this.mana - 20;
 				opponent.vida = opponent.vida - (this.atk / opponent.def);
-				System.out.println(opponent.rol + " Hp = " + String.format("%.02f",opponent.vida));
+				//mejore los outputs
+				if (opponent.nombre == null)
+				{System.out.println("HP de " + opponent.rol + ": " + String.format("%.02f",opponent.vida));}
+				else
+				{System.out.println("HP de " + opponent.nombre + " el " + opponent.rol + ": " + String.format("%.02f",opponent.vida));}
 			} else {
 				System.out.println("ataque fallado");
 			}
 		}
 	}
 	public void TomarPocionCuradora() {
-		if (this.vida == this.HpMax) {
-			System.out.println("Vida de " + this.rol + " lleno");;
-		} else if (this.vida >= (this.HpMax - 20)) {
-			this.vida = this.HpMax;
-			System.out.println(this.rol + " se ha curado completamente");
-		} else {
-			this.vida = this.vida + 20;
-			System.out.println(this.rol + " ha regenerado 20 de vida");
-		}
+		
+		int r = Pot_Vida.preguntarsize();
+		boolean a = false;
+		if (r == 1) {a= true;Pocion heal = new Pocion(20, a); inv.HPgrande = Pot_Vida.usarpocion(this, this.inv, a, heal.tedoy);}
+		else {Pocion heal = new Pocion(20); inv.HPjr = Pot_Vida.usarpocion(this, this.inv, a,  heal.tedoy);}
 	}
 
 	public void TomarPocionMana() {
-		if (this.mana == this.MpMax) {
-			System.out.println("Mana de " + this.rol + " lleno");;
-		} else if (this.mana >= this.MpMax - 20) {
-			this.mana = this.MpMax;
-			System.out.println(this.rol + " se ha recuperado completamente");
-		} else {
-			this.mana = this.mana + 20;
-			System.out.println(this.rol + " ha regenerado 20 de mana");
-		}
+		int r = Pot_Mana.preguntarsize();
+		boolean a = false;
+		if (r == 1) {a= true;Pocion heal = new Pocion(20, a); inv.HPgrande = Pot_Mana.usarpocion(this, this.inv, a, heal.tedoy);}
+		else {Pocion heal = new Pocion(20); inv.HPjr = Pot_Mana.usarpocion(this, this.inv, a,  heal.tedoy);}
 	}
 	public void Equipar(Item ItemSelect) {
 		double a = this.atk;
