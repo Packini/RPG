@@ -59,8 +59,6 @@ public class Main {
 				break;
 			}
 		}while (r != 1 && r != 2 && r != 3);
-		//QUE NO ME LLAMO VAGINA CABRON
-		// asies, hablo de esto XDDDDDD https://www.youtube.com/watch?v=zbE_QwyrOZU
 		//no ya en serio, ponerle name al rival
 		System.out.print("\nOH GENIAL... ahora ponle nombre a tu oponente\n");
 		String nameop = funcs.leerstr();
